@@ -1,0 +1,14 @@
+
+*.stash
+*.o
+Makefile
+moc_compute_shapley.cpp
+moc_mainwindow.cpp
+moc_predefs.h
+*.exe
+*.user
+ui_mainwindow.h
+Shapley.pro.user
+Shapley.pro.user
+*.user
+Shapley.pro.user
