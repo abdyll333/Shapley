@@ -8,16 +8,23 @@
 
 compute_shapley::compute_shapley(QObject *parent) : QObject(parent)
 {
+    messagesBuffer=" ";
     setUi_qvPlayerProportionShares();
     iPlayersValue_n=ui_qvPlayerProportionShares.size(); //ограничение по числу игроков задается количеством записанных долей
     iCoalitionMaxVal=pow(2,iPlayersValue_n);
-    qDebug()<<"Максимальное число коалиций = "<<iCoalitionMaxVal<<"\nМаксимальное число долей = "<<iAllSharesVal<<"\nМаксимальное число игроков = "<<iPlayersValue_n<<endl;
+    QString str="Максимальное число коалиций = "+QString::number(iCoalitionMaxVal)+
+            "\nМаксимальное число долей = "+QString::number(iAllSharesVal)+
+            "\nМаксимальное число игроков = "+
+            QString::number(iPlayersValue_n)+"\n";
+    qDebug()<<str;
+    emit sendConsole(str);
     setLi_qvFactorialCalculatedValues();
     createAllWinStrategyCoalitions();
     configureVectorShapley();
     for(int i = 0;i<d_qvectorShapley.size();i++)
-    qDebug()<<"Вектор Шепли ["<<i<<"] ="<<d_qvectorShapley[i];
-
+    QString str="Вектор Шепли ["+QString::number(i)+"] ="+QString::number(d_qvectorShapley[i])+"\n";
+    qDebug()<<str;
+    emit sendConsole(str);
 }
 void compute_shapley::setiPlayersValue_n(int n)
 {
@@ -28,7 +35,9 @@ void compute_shapley::setLi_qvFactorialCalculatedValues()
     for(int i=0;i<=iPlayersValue_n;i++)
     {
         d_qvFactorialCalculatedValues.push_back(factorial(static_cast<long double>(i)));
-        // qDebug()<<"Factorial["<<i<<"]="<<li_qvFactorialCalculatedValues[i]<<endl;
+        QString str="Factorial["+QString::number(i)+"]="+QString::number(d_qvFactorialCalculatedValues[i])+"\n";
+        qDebug()<<str;
+        emit sendConsole(str);
     }
 
 }
@@ -50,7 +59,11 @@ void compute_shapley::setUi_qvPlayerProportionShares()
     ui_qvPlayerProportionShares.push_back(18);
     iAllSharesVal+=18;
     for(int i =0;i<ui_qvPlayerProportionShares.size();i++)
-        qDebug()<<"Игрок - "<<i<<" Доля игрока = "<<ui_qvPlayerProportionShares[i];
+    {
+        QString str="Игрок - "+QString::number(i)+" Доля игрока = "+QString::number(ui_qvPlayerProportionShares[i])+"\n";
+        qDebug()<<str;
+        emit sendConsole(str);
+    }
 }
 ulong compute_shapley::factorial(ulong n)
 {
@@ -69,7 +82,17 @@ void compute_shapley::createAllWinStrategyCoalitions() //Создает набо
     }
     for(int i=0;i<i_qvWinningCoalitions.size();i++)
     {
-    qDebug()<<"Победная коалиция - "<<i_qvWinningCoalitions[i]<<" сумма долей выигрыша - "<<i_qvAllWinCoalitionsIndexSumm[i]<<" количество участников = "<<i_qvCoalitionValue_t[i];
+    QString str="Победная коалиция - ( ";
+    for(int j=0;j<i_qvWinningCoalitions[i].size();j++)
+    {
+        str+= QString::number(i_qvWinningCoalitions[i][j])+" ";
+    }
+            str+=") сумма долей выигрыша - "+
+                    QString::number(i_qvAllWinCoalitionsIndexSumm[i])+
+                    " количество участников = "+
+            QString::number(i_qvCoalitionValue_t[i])+"\n";
+    qDebug()<<str;
+    emit sendConsole(str);
     }
 
 }
@@ -137,3 +160,7 @@ void compute_shapley::configureVectorShapley()
 
 
 
+ void compute_shapley::sendConsole(QString & str)
+ {
+     messagesBuffer+=str;
+ }

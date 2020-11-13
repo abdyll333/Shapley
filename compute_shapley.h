@@ -12,15 +12,18 @@ class compute_shapley : public QObject
     int iPlayersValue_n; // Число участников n
     int iCoalitionMaxVal; //Число возможных коалиций
 
-    QVector<unsigned int>ui_qvPlayerProportionShares ; //Набор участников и их доля акций в компании где i - номер участиника
     QVector<QVector<int>>i_qvWinningCoalitions; //Победные коалиции вида {0,1,1..,n}
     QVector<int>i_qvCoalitionValue_t; //Число членов коалиции t для выборки (i соответсвует номеру стратегии)
     QVector<int>i_qvAllWinCoalitionsIndexSumm; //Сумма акций всех победных участников коалиции (индексация по порядку из всех возможных коалиций)
     QVector<double>d_qvFactorialCalculatedValues; //Вычисляемые заранее факториалы для задачи где v[i]-искомое значение i!
-    QVector<double>d_qvectorShapley; // вычисляемый вектор Шепли
+
 
 public:
     explicit compute_shapley(QObject *parent = nullptr);
+    QString messagesBuffer;
+    QVector<double>d_qvectorShapley; // вычисляемый вектор Шепли
+    QVector<unsigned int>ui_qvPlayerProportionShares ; //Набор участников и их доля акций в компании где i - номер участиника
+
 
     //инициализация входных значений
     void setiPlayersValue_n(int);
@@ -33,9 +36,13 @@ public:
     void computeShapley_i(int i,int j); //Расчитывает по формуле i элемент вектора Шепли из j-той выборки по коалиции i_qvWinningCoalitions и записывает результат в число
     void configureVectorShapley(); // Собираем все вычисления в вектор Шепли
     double getLi_qvFactorialCalculatedValues(int i);
+    void sendConsole(QString& msg); //Отправка сообщений на консоль
+
+
 
 
 signals:
+
 
 };
 
