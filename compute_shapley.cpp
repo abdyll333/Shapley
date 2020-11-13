@@ -8,7 +8,7 @@
 
 compute_shapley::compute_shapley(QObject *parent) : QObject(parent)
 {
-    messagesBuffer=" ";
+    messagesBuffer="";
     setUi_qvPlayerProportionShares();
     iPlayersValue_n=ui_qvPlayerProportionShares.size(); //ограничение по числу игроков задается количеством записанных долей
     iCoalitionMaxVal=pow(2,iPlayersValue_n);
