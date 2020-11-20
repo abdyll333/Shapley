@@ -9,6 +9,8 @@
 #include <QtCharts/QPieSlice>
 #include <QVBoxLayout>
 #include <QTextEdit>
+#include <QDebug>
+#include <QString>
 
 
 QT_CHARTS_USE_NAMESPACE
@@ -83,7 +85,11 @@ int main(int argc, char *argv[])
 
 
     QTextEdit *txt = new QTextEdit;
-    txt->setText(shapley.messagesBuffer);
+    txt->append(shapley.messagesBuffer);
+
+
+
+
     QWidget *window=new QWidget;
     QVBoxLayout *qvbxLayout=new QVBoxLayout;
     txt->setReadOnly(true);
@@ -91,7 +97,7 @@ int main(int argc, char *argv[])
     qvbxLayout->addWidget(chartViewStart);
     qvbxLayout->addWidget(txt);
     window->setLayout(qvbxLayout);
-    window->resize(400, 300);
+    window->resize(1920,1080);
     window->show();
 
     return a.exec();

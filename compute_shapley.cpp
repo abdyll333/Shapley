@@ -21,8 +21,9 @@ compute_shapley::compute_shapley(QObject *parent) : QObject(parent)
     setLi_qvFactorialCalculatedValues();
     createAllWinStrategyCoalitions();
     configureVectorShapley();
+    str="";
     for(int i = 0;i<d_qvectorShapley.size();i++)
-    QString str="Вектор Шепли ["+QString::number(i)+"] ="+QString::number(d_qvectorShapley[i])+"\n";
+    str+="Вектор Шепли ["+QString::number(i)+"] ="+QString::number(d_qvectorShapley[i])+"\n";
     qDebug()<<str;
     emit sendConsole(str);
 }
